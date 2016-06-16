@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+
+<registry>
+  
+  <records interface="medialog.plotly.interfaces.IPlotlySettings">
+      <value key="plotly_username"></value>
+      <value key="plotly_api_key"></value>
+  </records>    
+ 
+</registry>

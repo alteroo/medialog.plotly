@@ -1,0 +1,21 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    i18n_domain="medialog.plotly">
+          
+  <include package="plone.app.contentmenu" />
+
+    <browser:viewlet
+        name="plotlyviewlet"
+        for="plone.dexterity.interfaces.IDexterityContainer"
+        layer="medialog.plotly.interfaces.IPlotly"
+        class=".views.PlotView"
+        manager="plone.app.layout.viewlets.interfaces.IAboveContentTitle"
+        template="plotlyviewlet.pt"
+        permission="zope2.View"
+    />
+    
+
+
+
+</configure>

@@ -1,0 +1,32 @@
+Metadata-Version: 1.1
+Name: medialog.plotly
+Version: 0.1
+Summary: Makes it possible to use plotly with plone.
+Home-page: http://github.com/espemn/medialog.plotly
+Author: Grieg Medialog [Espen Moe-Nilssen]
+Author-email: espen@medialog.no
+License: GPL
+Description: ------------
+        Introduction
+        ------------
+        
+        
+        `medialog.plotly` adds plotly graphs to your content
+        
+        
+        
+                
+        Changelog
+        =========
+        
+        0.1 (06 16 2016)
+        ---------------------      
+        - First version [espenmn]
+        
+        
+Keywords: plone zope plotly
+Platform: UNKNOWN
+Classifier: Framework :: Plone
+Classifier: Framework :: Plone 5
+Classifier: Programming Language :: Python
+Classifier: Topic :: Software Development :: Libraries :: Python Modules

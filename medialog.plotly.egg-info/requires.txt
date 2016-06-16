@@ -1,0 +1,5 @@
+medialog.controlpanel
+plone.api
+plotly
+pandas
+numpy
