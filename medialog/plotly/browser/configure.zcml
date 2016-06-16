@@ -7,7 +7,7 @@
 
     <browser:viewlet
         name="plotlyviewlet"
-        for="plone.dexterity.interfaces.IDexterityContainer"
+        for="*"
         layer="medialog.plotly.interfaces.IPlotly"
         class=".views.PlotView"
         manager="plone.app.layout.viewlets.interfaces.IAboveContentTitle"

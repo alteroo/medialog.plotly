@@ -1,3 +1,7 @@
+from plone.app.layout.viewlets.common import ViewletBase
+from zope.component import getMultiAdapter
+
+
 from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
@@ -12,7 +16,7 @@ import plotly.plotly as py
 import plotly.graph_objs as go
 
 
-class PlotView(BrowserView):
+class PlotView(ViewletBase):
     """ plot something """
     
 
