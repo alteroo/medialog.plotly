@@ -27,14 +27,14 @@ class IPlotlySettings(form.Schema):
         ],
      )
     
-    plotly_username = schema.Text(
+    plotly_username = schema.TextLine(
         title = _("label_plotly_username", default=u"Plotly Username"),
         description = _("help_plotly",
                       default="Your Plotly ID"),
 
     )
 
-    plotly_api_key = schema.Text(
+    plotly_api_key = schema.TextLine(
         title = _("label_plotly_api_key", default=u"Plotly API key"),
         description = _("help_plotly_api",
                       default="Your Plotly API key"),

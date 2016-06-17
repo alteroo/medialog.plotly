@@ -1,6 +1,6 @@
 <div>
  <script type="text/javascript" src="https://raw.githubusercontent.com/plotly/plotly.js/master/dist/plotly.min.js"></script> 
  
-  <div tal:replace="structure  view/make_plot" /> 
-  xxxxxxxxxxx
+  <div tal:replace="structure  view/plotly_html" /> 
+
 </div>
