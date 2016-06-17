@@ -1,29 +1,29 @@
 from zope import schema
 from plone.directives import form
+import plone.directives
 from plone.autoform.interfaces import IFormFieldProvider
 from zope.interface import alsoProvides
 from zope.i18nmessageid import MessageFactory
-from zope.interface import Interface
-from zope.interface import implements
-
-from plone import api
-
-
-#plotly stuff
-import plotly 
-from plotly.graph_objs import Bar, Scatter, Figure, Layout
-import pandas as pd
-import numpy as np
-import plotly.plotly as py
-import plotly.graph_objs as go
-
-
-
-
-
+from collective.z3cform.datagridfield import DataGridFieldFactory 
+from collective.z3cform.datagridfield import DictRow
 
 _ = MessageFactory('medialog.plotly')
  
+class IPair(form.Schema):
+    name = schema.TextLine(
+        title=_(u"Name"),
+        description=u"",
+        required=False,
+    )
+
+    value = schema.Int(
+        title=_(u"Value"),
+        description=u"",
+        required=False,
+    ) 
+    
+
+
 class IPlotlyBehavior(form.Schema):
     """ A field where you can set URL to a CSV file"""
     
@@ -33,15 +33,39 @@ class IPlotlyBehavior(form.Schema):
         fields=[
               'csv_url',
               'plotly_html',
+              'graph_values',
+              'graph_data'
         ],
      )
      
     csv_url = schema.URI(
-        title = _("label_plotly", default=u"CSV URL"),
+        title = _("label_plotly_csv", default=u"CSV URL"),
+        description = _("help_plotly_csv",
+                      default=""),
+        required = False,
+     )
+    
+    graph_values = schema.Tuple(
+        title = _("label_plotly_graph_values", default=u"Graph Values"),
         description = _("help_plotly",
                       default="CSV URL"),
+        required=False,
+        default=(),
+        missing_value=(),
+        value_type=schema.Int(title=u"Int"),
      )
-     
+    
+    form.widget(graph_data=DataGridFieldFactory)
+    graph_data = schema.List(
+         title=_(u"graph_data", 
+            default=u"Graph data"),
+        description=_(u"help_graph_data",
+            default="""Graph Data"""),
+        value_type=DictRow(schema=IPair),
+        required=False,
+    )
+    
+    form.mode(plotly_html='hidden')
     plotly_html = schema.Text(
         title=u'Plotly html',
         default=u'',
@@ -54,39 +78,4 @@ alsoProvides(IPlotlyBehavior, IFormFieldProvider)
 
 
 
-class PlotlyBehavior(Interface):
-    """ find it"""
-    
-    
-    def plotly(self, context):
-        """https://plot.ly/python/getting-started/"""
 
-        csv_url = context.csv_url
-        
-        #login / api stuff
-        username = context.portal_registry['medialog.plotly.interfaces.IPlotlySettings.plotly_username']
-        api_key  = context.portal_registry['medialog.plotly.interfaces.IPlotlySettings.plotly_api_key']
-        plotly.tools.set_credentials_file(username=username, api_key=api_key)
-        
-        title = context.Title()
-        name = context.Description() or ''
-        
-        
-        df = pd.read_csv(csv_url)
-        df.head()
-        
-        trace = go.Scatter(
-                  #x-aksis og y-aksis
-                  x = df['AAPL_x'], y = df['AAPL_y'],
-                  name=name,
-                  )
-        layout = go.Layout(
-                  title=title,
-                  plot_bgcolor='rgb(230, 230,230)',
-                  showlegend=True
-                  )
-        fig = go.Figure(data=[trace], layout=layout)
-        context.plotly_html = plotly.offline.plot(fig, show_link=False, include_plotlyjs = False, output_type='div')
-        return  plotly.offline.plot(fig, show_link=False, include_plotlyjs = False, output_type='div')
-      
-    

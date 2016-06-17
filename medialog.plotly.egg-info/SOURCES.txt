@@ -17,14 +17,15 @@ medialog/plotly/__init__.py
 medialog/plotly/behaviors.py
 medialog/plotly/behaviors.zcml
 medialog/plotly/configure.zcml
+medialog/plotly/events.py
 medialog/plotly/interfaces.py
 medialog/plotly/profiles.zcml
 medialog/plotly/browser/.DS_Store
 medialog/plotly/browser/__init__.py
 medialog/plotly/browser/configure.zcml
+medialog/plotly/browser/plotlyjavascript.pt
 medialog/plotly/browser/plotlyviewlet.pt
-medialog/plotly/browser/views.py
-medialog/plotly/browser/xxxplotlygraph.pt
+medialog/plotly/browser/viewlets.py
 medialog/plotly/profiles/.DS_Store
 medialog/plotly/profiles/default/browserlayer.xml
 medialog/plotly/profiles/default/metadata.xml

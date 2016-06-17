@@ -6,10 +6,19 @@
   <include package="plone.app.contentmenu" />
 
     <browser:viewlet
-        name="plotlyviewlet"
+        name="plotly_javascript_viewlet"
         for="*"
         layer="medialog.plotly.interfaces.IPlotly"
-        class=".views.PlotView"
+        manager="plone.app.layout.viewlets.interfaces.IHtmlHead"
+        template="plotlyjavascript.pt"
+        permission="zope2.View"
+    />
+
+    <browser:viewlet
+        name="plotly_viewlet"
+        for="*"
+        layer="medialog.plotly.interfaces.IPlotly"
+        class=".viewlets.PlotView"
         manager="plone.app.layout.viewlets.interfaces.IAboveContentTitle"
         template="plotlyviewlet.pt"
         permission="zope2.View"

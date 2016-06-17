@@ -8,7 +8,17 @@
     <include file="behaviors.zcml" />
     <include file="profiles.zcml" />
 
+    <subscriber
+        for=".behaviors.IPlotlyBehavior
+        zope.lifecycleevent.interfaces.IObjectModifiedEvent"
+        handler=".events.make_bar"
+        />
 
+    <subscriber
+        for=".behaviors.IPlotlyBehavior
+        zope.lifecycleevent.interfaces.IObjectAddedEvent"
+        handler=".events.make_bar"
+        />
 
 </configure>
 
