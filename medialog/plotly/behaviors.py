@@ -4,6 +4,7 @@ from plone.autoform.interfaces import IFormFieldProvider
 from zope.interface import alsoProvides
 from zope.i18nmessageid import MessageFactory
 from zope.interface import Interface
+from zope.interface import implements
 
 from plone import api
 
@@ -56,7 +57,7 @@ alsoProvides(IPlotlyBehavior, IFormFieldProvider)
 class PlotlyBehavior(Interface):
     """ find it"""
     
-    @property
+    
     def plotly(self, context):
         """https://plot.ly/python/getting-started/"""
 
