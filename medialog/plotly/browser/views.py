@@ -12,10 +12,7 @@ import numpy as np
 import plotly.plotly as py
 import plotly.graph_objs as go
 
-#login / api stuff
-username = context.portal_registry['medialog.plotly.interfaces.IPlotlySettings.plotly_username']
-api_key  = context.portal_registry['medialog.plotly.interfaces.IPlotlySettings.plotly_api_key']
-plotly.tools.set_credentials_file(username=username, api_key=api_key)
+
 
 class PlotView(ViewletBase):
     """ plot something """
@@ -23,10 +20,17 @@ class PlotView(ViewletBase):
     def make_plot(self):
         """https://plot.ly/python/getting-started/"""
 
-        context = self.context
+        context  = self.context
+        csv_url = context.csv_url
+        
+        #login / api stuff
+        username = context.portal_registry['medialog.plotly.interfaces.IPlotlySettings.plotly_username']
+        api_key  = context.portal_registry['medialog.plotly.interfaces.IPlotlySettings.plotly_api_key']
+        plotly.tools.set_credentials_file(username=username, api_key=api_key)
+        
         title = context.Title()
         name = context.Description() or ''
-        csv_file = context.csv_url
+        
         
         df = pd.read_csv(csv_url)
         df.head()
@@ -42,14 +46,16 @@ class PlotView(ViewletBase):
                   showlegend=True
                   )
         fig = go.Figure(data=[trace], layout=layout)
-        context.plotlyhtml = plotly.offline.plot(fig, show_link=False, include_plotlyjs = False, output_type='div')
+        context.plotly_html = plotly.offline.plot(fig, show_link=False, include_plotlyjs = False, output_type='div')
       
-        
+    
+    @property
     def plotly_html(self):
         """return the html generated from plotly"""
 
         context = self.context
-        if not context.plotlyhtml:
+        
+        if not context.plotly_html:
         	self.make_plot()
         
-        return context.plotlyhtml
+        return context.plotly_html
