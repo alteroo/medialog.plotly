@@ -16,7 +16,7 @@ class IPair(form.Schema):
         required=False,
     )
 
-    value = schema.Int(
+    value = schema.Float(
         title=_(u"Value"),
         description=u"",
         required=False,
@@ -52,7 +52,7 @@ class IPlotlyBehavior(form.Schema):
         required=False,
         default=(),
         missing_value=(),
-        value_type=schema.Int(title=u"Int"),
+        value_type=schema.Int(title=u"Value"),
      )
     
     form.widget(graph_data=DataGridFieldFactory)

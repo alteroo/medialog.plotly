@@ -54,12 +54,17 @@ def make_bar(self, context):
     graph_data = self.graph_data
     graph_count = len (graph_data)
     
-    y = name
-    import pdb; pdb.set_trace()
+    y = []
+    for item in graph_data:
+        y.append(item['value'])
+    
+    x = []
+    for item in graph_data:
+        x.append(item['name'])
     
     data = [go.Bar(
-            y=[9, 16, 11],
-            x=['ludvik', 'pia', 'henrik'],
+            y=y,
+            x=x,
             orientation = 'v'
     )]
 
