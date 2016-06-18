@@ -34,7 +34,8 @@ class IPlotlyBehavior(form.Schema):
               'csv_url',
               'plotly_html',
               'graph_values',
-              'graph_data'
+              'graph_data',
+              'chart_type',
         ],
      )
      
@@ -63,6 +64,11 @@ class IPlotlyBehavior(form.Schema):
             default="""Graph Data"""),
         value_type=DictRow(schema=IPair),
         required=False,
+    )
+
+    chart_type = schema.Choice(
+        title=u'Chart type',
+        values=['bar', 'pie' ],
     )
     
     form.mode(plotly_html='hidden')

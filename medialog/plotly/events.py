@@ -52,7 +52,7 @@ def make_bar(self, context):
     self.login()
 
     graph_data = self.graph_data
-    graph_count = len (graph_data)
+    chart_type = self.chart_type
     
     y = []
     for item in graph_data:
@@ -62,10 +62,18 @@ def make_bar(self, context):
     for item in graph_data:
         x.append(item['name'])
     
-    data = [go.Bar(
+    if chart_type == 'bar':
+        data = [go.Bar(
             y=y,
             x=x,
             orientation = 'v'
-    )]
+        )]
+        
 
-    self.plotly_html = plotly.offline.plot(data, include_plotlyjs = False, output_type='div')
+    if chart_type == 'pie':
+        data = [go.Pie(
+            labels=x,
+            values=y)
+        ]
+
+    self.plotly_html = plotly.offline.plot(data, include_plotlyjs = False, show_link=False, output_type='div')

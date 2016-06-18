@@ -32,7 +32,7 @@ setup(name='medialog.plotly',
           'plone.api',
           'plotly',
           'pandas',
-           'numpy'
+           'numpy',
           # -*- Extra requirements: -*-
       ],
       entry_points="""
