@@ -27,6 +27,7 @@ medialog/plotly/browser/plotlyjavascript.pt
 medialog/plotly/browser/plotlyviewlet.pt
 medialog/plotly/browser/viewlets.py
 medialog/plotly/profiles/.DS_Store
+medialog/plotly/profiles/default/.DS_Store
 medialog/plotly/profiles/default/browserlayer.xml
 medialog/plotly/profiles/default/metadata.xml
 medialog/plotly/profiles/default/registry.xml

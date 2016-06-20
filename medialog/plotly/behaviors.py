@@ -17,9 +17,9 @@ class IPair(form.Schema):
     )
 
     value = schema.Float(
-        title=_(u"Value"),
+        title=_(u"Value(s)"),
         description=u"",
-        required=False,
+        required=False,    
     ) 
     
 
@@ -33,7 +33,6 @@ class IPlotlyBehavior(form.Schema):
         fields=[
               'csv_url',
               'plotly_html',
-              'graph_values',
               'graph_data',
               'chart_type',
         ],
@@ -44,16 +43,6 @@ class IPlotlyBehavior(form.Schema):
         description = _("help_plotly_csv",
                       default=""),
         required = False,
-     )
-    
-    graph_values = schema.Tuple(
-        title = _("label_plotly_graph_values", default=u"Graph Values"),
-        description = _("help_plotly",
-                      default="CSV URL"),
-        required=False,
-        default=(),
-        missing_value=(),
-        value_type=schema.Int(title=u"Value"),
      )
     
     form.widget(graph_data=DataGridFieldFactory)
@@ -68,7 +57,7 @@ class IPlotlyBehavior(form.Schema):
 
     chart_type = schema.Choice(
         title=u'Chart type',
-        values=['bar', 'pie' ],
+        values=['bar', 'pie', 'histogram', 'line' ],
     )
     
     form.mode(plotly_html='hidden')

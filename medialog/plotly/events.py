@@ -49,10 +49,13 @@ def make_basic_graph(self, context):
 def make_bar(self, context):
     """let plottly make bar"""
     
+    title = self.Title()
+    name = self.Description() or ''
     self.login()
 
     graph_data = self.graph_data
     chart_type = self.chart_type
+ 
     
     y = []
     for item in graph_data:
@@ -75,5 +78,21 @@ def make_bar(self, context):
             labels=x,
             values=y)
         ]
+        
+    if chart_type == 'histogram':
+        data = [go.Histogram(
+            x=x,
+            y=y)
+        ]
+        
+    if chart_type == 'line':
+        data = go.Line(
+              #x-aksis og y-aksis
+              )
+        layout = go.Layout(
+              title=title,
+              plot_bgcolor='rgb(230, 230,230)',
+              showlegend=True
+              )
 
     self.plotly_html = plotly.offline.plot(data, include_plotlyjs = False, show_link=False, output_type='div')
