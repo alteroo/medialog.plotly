@@ -11,13 +11,13 @@
     <subscriber
         for=".behaviors.IPlotlyBehavior
         zope.lifecycleevent.interfaces.IObjectModifiedEvent"
-        handler=".events.make_bar"
+        handler=".events.make_html"
         />
 
     <subscriber
         for=".behaviors.IPlotlyBehavior
         zope.lifecycleevent.interfaces.IObjectAddedEvent"
-        handler=".events.make_bar"
+        handler=".events.make_html"
         />
 
 </configure>

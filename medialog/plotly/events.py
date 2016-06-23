@@ -17,36 +17,57 @@ def login(self):
     api_key  = self.portal_registry['medialog.plotly.interfaces.IPlotlySettings.plotly_api_key']
     plotly.tools.set_credentials_file(username=username, api_key=api_key)
     
-def make_basic_graph(self, context):
-    """ generating the html from plotly every time URL is changed"""
-    
-    csv_url = self.csv_url
-    title = self.Title()
-    name = self.Description() or ''
-    
-    self.login()
-    
-    df = pd.read_csv(csv_url)
-    df.head()
-    axis = df.columns.tolist()
-    xaxis = axis[0]
-    yaxis = axis[1]
-    
-    trace = go.Scatter(
-              #x-aksis og y-aksis
-              x = df[xaxis], y = df[yaxis],
-              name=name,
-              )
-    layout = go.Layout(
-              title=title,
-              plot_bgcolor='rgb(230, 230,230)',
-              showlegend=True
-              )
-    fig = go.Figure(data=[trace], layout=layout)
-    self.plotly_html = plotly.offline.plot(fig, show_link=False, include_plotlyjs = False, output_type='div')
+
   
 
-def make_bar(self, context):
+def make_html(self, context):
+    """let plottly make bar"""
+    
+    title = self.Title()
+    name = self.Description() or ''
+    self.login()
+
+    chart_type = self.chart_type
+ 
+    if chart_type == 'pie':
+        make_pie(self, context, title, name)
+        
+    if chart_type == 'json':
+        make_json_graph(self, context, title, name)
+        
+def make_pie(self, context, title, name):
+    y = []
+    x = []
+    graph_data=self.graph_data
+    
+    for item in graph_data:
+        y.append(item['value'])
+        x.append(item['name'])
+    
+    data = [go.Pie(
+            labels=x,
+            values=y)
+    ]
+    
+    layout = {'title': title, 'show_link': False}
+        
+    self.plotly_html = plotly.offline.plot(data, layout, include_plotlyjs = False, output_type='div')
+        
+
+
+def make_json_graph(self, context, title, name):
+    """ generating the html from plotly every time URL is changed"""
+    
+    json_url = self.json_url
+    
+    data = pd.read_json(json_url)
+    import pdb; pdb.set_trace()
+    #data.head()
+    
+    self.plotly_html = plotly.offline.plot(data, include_plotlyjs = False, output_type='div')
+
+ 
+def make_xhtml(self, context):
     """let plottly make bar"""
     
     title = self.Title()
@@ -56,10 +77,13 @@ def make_bar(self, context):
     graph_data = self.graph_data
     chart_type = self.chart_type
  
-    
     y = []
+    y1 = []
+    y2 = []
     for item in graph_data:
-        y.append(item['value'])
+        y.append(item['values'][0])
+        y1.append(item['values'][1])
+        y1.append(item['values'][2])
     
     x = []
     for item in graph_data:
@@ -96,3 +120,32 @@ def make_bar(self, context):
               )
 
     self.plotly_html = plotly.offline.plot(data, include_plotlyjs = False, show_link=False, output_type='div')
+    
+
+def make_basic_graph(self, context):
+    """ generating the html from plotly every time URL is changed"""
+    
+    csv_url = self.csv_url
+    title = self.Title()
+    name = self.Description() or ''
+    
+    self.login()
+    
+    df = pd.read_csv(csv_url)
+    df.head()
+    axis = df.columns.tolist()
+    xaxis = axis[0]
+    yaxis = axis[1]
+    
+    trace = go.Scatter(
+              #x-aksis og y-aksis
+              x = df[xaxis], y = df[yaxis],
+              name=name,
+              )
+    layout = go.Layout(
+              title=title,
+              plot_bgcolor='rgb(230, 230,230)',
+              showlegend=True
+              )
+    fig = go.Figure(data=[trace], layout=layout)
+    self.plotly_html = plotly.offline.plot(fig, show_link=False, include_plotlyjs = False, output_type='div')
