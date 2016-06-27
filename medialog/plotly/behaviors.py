@@ -27,6 +27,7 @@ class IPair(form.Schema):
 
 class IPlotlyBehavior(form.Schema):
     """ Can be 'plotlified' """
+
     form.mode(plotly_html='hidden')
     plotly_html = schema.Text(
         title=u'Plotly html',
@@ -37,17 +38,23 @@ alsoProvides(IPlotlyBehavior, IFormFieldProvider)
     
 
 class IPieBehavior(form.Schema):
-    """ A field where you can set URL to a CSV file"""
+    """Plotly fields"""
     
     form.fieldset(
         'plotly',
         label=_(u'Plotly'),
         fields=[
+              'table',
               'graph_data',
               'chart_type',
         ],
      )
-     
+    
+    table = schema.Text(
+        title=u'Table',
+        default=u'',
+        required=False,
+    )  
     
     form.widget(graph_data=DataGridFieldFactory)
     graph_data = schema.List(

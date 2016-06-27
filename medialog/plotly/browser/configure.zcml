@@ -19,7 +19,7 @@
         for="*"
         layer="medialog.plotly.interfaces.IPlotly"
         class=".viewlets.PlotView"
-        manager="plone.app.layout.viewlets.interfaces.IAboveContentTitle"
+        manager="plone.app.layout.viewlets.interfaces.IBelowContentTitle"
         template="plotlyviewlet.pt"
         permission="zope2.View"
     />

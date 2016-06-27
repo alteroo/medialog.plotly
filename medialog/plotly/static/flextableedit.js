@@ -1,4 +1,3 @@
-<div tal:replace="structure  context/plotly_html" />  
 <script type="text/javascript">
 $(function () {
     var contentArray = [
