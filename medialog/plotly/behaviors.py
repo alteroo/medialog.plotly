@@ -51,6 +51,7 @@ class IPieBehavior(form.Schema):
         ],
      )
     
+    
     form.widget(table=TableWidget)
     table = schema.Text(
         title=u'Table',

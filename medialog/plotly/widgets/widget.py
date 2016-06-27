@@ -14,6 +14,9 @@ class ITableWidget(interfaces.IWidget):
 class TableWidget(text.TextWidget):
     zope.interface.implementsOnly(ITableWidget)
     
+    def update(self):
+        super(TableWidget, self).update()
+             
     def javascript(self):
         return ""
 
