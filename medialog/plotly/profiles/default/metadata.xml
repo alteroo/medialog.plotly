@@ -3,6 +3,7 @@
     <dependencies>
       <dependency>profile-medialog.controlpanel:default</dependency>
       <dependency>profile-collective.z3cform.datagridfield:default</dependency>
+      <dependency>profile-medialog.tablebehavior:default</dependency>      
     </dependencies>
   <version>1000</version>
 </metadata>

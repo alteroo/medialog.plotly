@@ -11,6 +11,7 @@ import numpy as np
 import plotly.plotly as py
 import plotly.graph_objs as go
 
+
 _ = MessageFactory('medialog.plotly')
  
 
@@ -40,11 +41,17 @@ def make_html(self, context):
 def make_pie(self, context, title, name):
     y = []
     x = []
-    graph_data=self.graph_data
+    graph_data=self.table
     
-    for item in graph_data:
-        y.append(item['value'])
-        x.append(item['name'])
+    import pdb; pdb.set_trace()
+    
+    y = graph_data[0]
+    y = graph_data[1]
+    
+    
+    #for item in graph_data:
+    #    y.append(item['value'])
+    #   x.append(item['name'])
     
     data = [go.Pie(
             labels=x,

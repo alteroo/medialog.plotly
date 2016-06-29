@@ -6,7 +6,7 @@ from zope.interface import alsoProvides
 from zope.i18nmessageid import MessageFactory
 from collective.z3cform.datagridfield import DataGridFieldFactory 
 from collective.z3cform.datagridfield import DictRow
-#from medialog.plotly.widgets.widget import TableWidget
+from medialog.tablebehavior.widgets.widget import  TableFieldWidget
 
 _ = MessageFactory('medialog.plotly')
 
@@ -36,45 +36,37 @@ class IPlotlyBehavior(form.Schema):
 alsoProvides(IPlotlyBehavior, IFormFieldProvider)
     
 
+
 class IPieBehavior(form.Schema):
     """Plotly fields"""
     
     form.fieldset(
         'plotly',
-        label=_(u'Plotly'),
+        label=_(u'Graph'),
         fields=[
-              'plotly_table',
-              'graph_data',
               'chart_type',
+              'table'
         ],
      )
-    
-    
-    plotly_table = schema.TextLine(
+     
+    table = schema.Text(
         title=u'Table',
-        default=u'',
-        required=False,
+        default=u'[["A", "B"], [10, 20]]',
+        required=True,
     )  
     
-    form.widget(graph_data=DataGridFieldFactory)
-    graph_data = schema.List(
-         title=_(u"graph_data", 
-            default=u"Graph data"),
-        description=_(u"help_graph_data",
-            default="""Graph Data"""),
-        value_type=DictRow(schema=IPair),
-        required=False,
+    form.widget(
+            table=TableFieldWidget
     )
-    
+  
     form.mode(chart_type='hidden')
     chart_type = schema.TextLine(
         title=u'Chart type',
         default=u"pie",
     )
 
-
-
 alsoProvides(IPieBehavior, IFormFieldProvider)
+
 
 
 class IPlotlyJsonBehavior(form.Schema):
@@ -116,8 +108,6 @@ class IXPlotlyBehavior(form.Schema):
         label=_(u'Plotly'),
         fields=[
               'csv_url',
-
-
         ],
      )
      
