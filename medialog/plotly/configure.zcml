@@ -8,7 +8,7 @@
  	<include package=".browser" />
     <include file="behaviors.zcml" />
     <include file="profiles.zcml" />
-    <include package=".widgets" />
+ 
 
     <subscriber
         for=".behaviors.IPlotlyBehavior
@@ -22,9 +22,5 @@
         handler=".events.make_html"
         />
 
-    <browser:resourceDirectory
-      name="medialog-plotly"
-      directory="static"
-      />
 </configure>
 

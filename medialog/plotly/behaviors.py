@@ -6,12 +6,10 @@ from zope.interface import alsoProvides
 from zope.i18nmessageid import MessageFactory
 from collective.z3cform.datagridfield import DataGridFieldFactory 
 from collective.z3cform.datagridfield import DictRow
-from medialog.plotly.widgets.widget import TableWidget
+#from medialog.plotly.widgets.widget import TableWidget
 
 _ = MessageFactory('medialog.plotly')
 
-
- 
 class IPair(form.Schema):
     name = schema.TextLine(
         title=_(u"Name"),
@@ -45,15 +43,14 @@ class IPieBehavior(form.Schema):
         'plotly',
         label=_(u'Plotly'),
         fields=[
-              'table',
+              'plotly_table',
               'graph_data',
               'chart_type',
         ],
      )
     
     
-    form.widget(table=TableWidget)
-    table = schema.Text(
+    plotly_table = schema.TextLine(
         title=u'Table',
         default=u'',
         required=False,
@@ -74,6 +71,8 @@ class IPieBehavior(form.Schema):
         title=u'Chart type',
         default=u"pie",
     )
+
+
 
 alsoProvides(IPieBehavior, IFormFieldProvider)
 
