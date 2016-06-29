@@ -7,6 +7,7 @@ from zope.i18nmessageid import MessageFactory
 from collective.z3cform.datagridfield import DataGridFieldFactory 
 from collective.z3cform.datagridfield import DictRow
 from medialog.tablebehavior.widgets.widget import  TableFieldWidget
+from zope.interface import implementer
 
 _ = MessageFactory('medialog.plotly')
 
@@ -37,6 +38,8 @@ alsoProvides(IPlotlyBehavior, IFormFieldProvider)
     
 
 
+
+@implementer(IFromUnicode)
 class IPieBehavior(form.Schema):
     """Plotly fields"""
     
