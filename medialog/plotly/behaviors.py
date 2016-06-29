@@ -8,6 +8,7 @@ from collective.z3cform.datagridfield import DataGridFieldFactory
 from collective.z3cform.datagridfield import DictRow
 from medialog.tablebehavior.widgets.widget import  TableFieldWidget
 from zope.interface import implementer
+from zope.schema.interfaces import IFromUnicode
 
 _ = MessageFactory('medialog.plotly')
 
