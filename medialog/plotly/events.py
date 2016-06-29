@@ -21,7 +21,6 @@ def login(self):
     plotly.tools.set_credentials_file(username=username, api_key=api_key)
     
 
-  
 
 def make_html(self, context):
     """let plottly make bar"""
@@ -41,7 +40,9 @@ def make_html(self, context):
 def make_pie(self, context, title, name):
     y = []
     x = []
-    graph_data=self.table
+    graph_data=[]
+    #graph_data=str(self.table)
+    graph_data = np.array(str(self.table))
     
     import pdb; pdb.set_trace()
     
