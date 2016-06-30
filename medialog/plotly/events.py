@@ -43,8 +43,6 @@ def make_pie(self, context, title, name):
     y = []
     x = []
     graph_data = []
-    import pdb; pdb.set_trace()
-    
     df = pd.read_json(self.table)
     indexes = df.columns.values.tolist()
     

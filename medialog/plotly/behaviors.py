@@ -33,12 +33,12 @@ class IPieBehavior(form.Schema):
         ],
      )
      
-    form.widget(table=TableFieldWidget)
     table = schema.Text(
         title=u'Table',
-        default=u'[[A, B	], [10, 20]]',
+        default=u'[["A", "B"], [1, 10]]',
         required=True,
     )  
+    form.widget(table=TableFieldWidget)
     
     form.mode(chart_type='hidden')
     chart_type = schema.TextLine(
