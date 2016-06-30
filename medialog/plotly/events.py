@@ -46,7 +46,6 @@ def make_pie(self, context, title, name):
     import pdb; pdb.set_trace()
     
     df = pd.read_json(self.table)
-    
     indexes = df.columns.values.tolist()
     
     for index in indexes:
@@ -54,13 +53,13 @@ def make_pie(self, context, title, name):
     
     #there must be a better way to do this
     for items in graph_data:
-        x.append(graph_data[0])
-        y.append(graph_data[1:])
-        
+        x.append(items[0])
+        for item in items[1:]:
+        	y.append(str(item))
+       
     data = [go.Pie(
             labels=x,
-            values=y)
-    ]
+            values=y) ]
     
     layout = {'title': title, 'show_link': False}
         
