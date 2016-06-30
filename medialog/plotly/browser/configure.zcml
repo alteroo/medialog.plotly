@@ -7,7 +7,7 @@
 
     <browser:viewlet
         name="plotly_javascript_viewlet"
-        for="*"
+        for="medialog.plotly.behaviors.IPlotlyBehavior"
         layer="medialog.plotly.interfaces.IPlotly"
         manager="plone.app.layout.viewlets.interfaces.IHtmlHead"
         template="plotlyjavascript.pt"
