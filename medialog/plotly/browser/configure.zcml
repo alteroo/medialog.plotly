@@ -16,7 +16,7 @@
 
     <browser:viewlet
         name="plotly_viewlet"
-        for="*"
+        for="medialog.plotly.behaviors.IPlotlyBehavior"
         layer="medialog.plotly.interfaces.IPlotly"
         class=".viewlets.PlotView"
         manager="plone.app.layout.viewlets.interfaces.IBelowContentTitle"
