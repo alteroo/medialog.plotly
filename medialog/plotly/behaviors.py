@@ -4,26 +4,9 @@ import plone.directives
 from plone.autoform.interfaces import IFormFieldProvider
 from zope.interface import alsoProvides
 from zope.i18nmessageid import MessageFactory
-from collective.z3cform.datagridfield import DataGridFieldFactory 
-from collective.z3cform.datagridfield import DictRow
-from medialog.tablebehavior.widgets.widget import  TableFieldWidget
-from zope.interface import implementer
-from zope.schema.interfaces import IFromUnicode
+from medialog.tablebehavior.widgets.widget import TableFieldWidget
 
 _ = MessageFactory('medialog.plotly')
-
-class IPair(form.Schema):
-    name = schema.TextLine(
-        title=_(u"Name"),
-        description=u"",
-        required=False,
-    )
-  
-    value = schema.Float(
-        title=_(u"Value(s)"),
-        description=u"",
-        required=False,    
-    )       
 
 
 class IPlotlyBehavior(form.Schema):
@@ -38,9 +21,6 @@ class IPlotlyBehavior(form.Schema):
 alsoProvides(IPlotlyBehavior, IFormFieldProvider)
     
 
-
-
-@implementer(IFromUnicode)
 class IPieBehavior(form.Schema):
     """Plotly fields"""
     
@@ -49,20 +29,17 @@ class IPieBehavior(form.Schema):
         label=_(u'Graph'),
         fields=[
               'chart_type',
-              'table'
+              'table',
         ],
      )
      
+    form.widget(table=TableFieldWidget)
     table = schema.Text(
         title=u'Table',
-        default=[["A", "B"], [10, 20]],
+        default=u'[[A, B	], [10, 20]]',
         required=True,
     )  
     
-    form.widget(
-            table=TableFieldWidget
-    )
-  
     form.mode(chart_type='hidden')
     chart_type = schema.TextLine(
         title=u'Chart type',
@@ -92,7 +69,6 @@ class IPlotlyJsonBehavior(form.Schema):
         required = True,
      )
     
-    
     form.mode(chart_type='hidden')
     chart_type = schema.TextLine(
         title=u'Chart type',
@@ -100,8 +76,6 @@ class IPlotlyJsonBehavior(form.Schema):
     )
     
 alsoProvides(IPlotlyJsonBehavior, IFormFieldProvider)
-
-
 
 
 class IXPlotlyBehavior(form.Schema):
@@ -120,8 +94,7 @@ class IXPlotlyBehavior(form.Schema):
         description = _("help_plotly_csv",
                       default=""),
         required = False,
-     )
-    
+     )    
     
     form.mode(plotly_html='hidden')
     plotly_html = schema.Text(

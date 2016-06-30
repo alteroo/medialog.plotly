@@ -1,3 +1,5 @@
+
+    
 from plone import api
 from zope.i18nmessageid import MessageFactory
 
@@ -40,20 +42,21 @@ def make_html(self, context):
 def make_pie(self, context, title, name):
     y = []
     x = []
-    graph_data=[]
-    #graph_data=str(self.table)
-    graph_data = np.array(str(self.table))
-    
+    graph_data = []
     import pdb; pdb.set_trace()
     
-    y = graph_data[0]
-    y = graph_data[1]
+    df = pd.read_json(self.table)
     
+    indexes = df.columns.values.tolist()
     
-    #for item in graph_data:
-    #    y.append(item['value'])
-    #   x.append(item['name'])
+    for index in indexes:
+        graph_data.append(df[index].values.tolist())
     
+    #there must be a better way to do this
+    for items in graph_data:
+        x.append(graph_data[0])
+        y.append(graph_data[1:])
+        
     data = [go.Pie(
             labels=x,
             values=y)
