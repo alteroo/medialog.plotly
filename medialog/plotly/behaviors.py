@@ -53,7 +53,7 @@ class IPieBehavior(form.Schema):
         ],
      )
      
-    table = schema.List(
+    table = schema.Text(
         title=u'Table',
         default=[["A", "B"], [10, 20]],
         required=True,
