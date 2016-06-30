@@ -57,7 +57,7 @@ def make_pie(self, context, title, name):
        
     data = [go.Pie(
             labels=x,
-            values=y) ]
+            values=y[0]) ]
     
     layout = {'title': title, 'show_link': False}
         
