@@ -52,7 +52,7 @@ def make_pie(self, context, title, name):
     #there must be a better way to do this
     for items in graph_data:
         x.append(items[0])
-        for item in items[1:]:
+        for item in items[1]:
         	y.append(str(item))
        
     data = [go.Pie(
