@@ -29,21 +29,26 @@ class IPieBehavior(form.Schema):
         label=_(u'Graph'),
         fields=[
               'chart_type',
+              'orientation',
               'table',
         ],
      )
      
+    form.widget(table=TableFieldWidget)
     table = schema.Text(
         title=u'Table',
         default=u'[["A", "B"], [1, 10]]',
         required=True,
     )  
-    form.widget(table=TableFieldWidget)
     
-    form.mode(chart_type='hidden')
-    chart_type = schema.TextLine(
+    chart_type = schema.Choice(
         title=u'Chart type',
-        default=u"pie",
+        values=[u"pie", u"bar", u"line", u"map"],
+    )
+
+    orientation = schema.Choice(
+        title=u'Vertical or Horizontal (if available)',
+        values=[u"h", u"v"],
     )
 
 alsoProvides(IPieBehavior, IFormFieldProvider)

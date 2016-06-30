@@ -4,6 +4,7 @@ plone.api
 plone.directives.form
 plone.behavior
 plone.api
+medialog.tablebehavior
 plotly
 pandas
 numpy
