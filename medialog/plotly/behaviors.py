@@ -28,6 +28,8 @@ class IPieBehavior(form.Schema):
         'plotly',
         label=_(u'Graph'),
         fields=[
+               'chart_title',
+               'chart_description',
               'chart_type',
               'orientation',
               'table',
@@ -40,6 +42,14 @@ class IPieBehavior(form.Schema):
         default=u'[["A", "B"], [1, 10]]',
         required=True,
     )  
+    
+    chart_title = schema.TextLine(
+        title=u'Chart Title',
+    )
+
+    chart_description = schema.TextLine(
+        title=u'Chart Title',
+    )
     
     chart_type = schema.Choice(
         title=u'Chart type',

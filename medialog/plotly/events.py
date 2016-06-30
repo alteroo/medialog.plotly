@@ -27,8 +27,8 @@ def login(self):
 def make_html(self, context):
     """let plottly make bar"""
     
-    title = self.Title()
-    name = self.Description() or ''
+    name = self.chart_description
+    title = self.chart_title
     chart_type = self.chart_type
     orientation = self.orientation
     self.login()
