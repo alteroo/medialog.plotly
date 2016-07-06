@@ -48,7 +48,7 @@ class IPieBehavior(form.Schema):
     )
 
     chart_description = schema.TextLine(
-        title=u'Chart Title',
+        title=u'Chart Description',
     )
     
     chart_type = schema.Choice(
