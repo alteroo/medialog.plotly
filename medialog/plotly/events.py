@@ -88,7 +88,9 @@ def make_pie(self, context, title, df, ylabel, columns, columnlist):
         trace.append(go.Pie(
               labels = labels, 
               values = values[0][1:],
+              name= values[0][0],
               text= values[0][0],
+              hole = 0,
               domain = dict(x = [graphfirst, graphsecond]
               ),
              ))
