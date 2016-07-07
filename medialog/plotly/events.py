@@ -30,18 +30,10 @@ def make_html(self, context):
     title = self.chart_title
     chart_type = self.chart_type
     ylabel = self.chart_description
-    orientation = self.orientation
     self.login()
     
     df = pd.read_json(self.table)
     
-    #df.head()
-    #axis = df.columns.tolist()
-    #xaxis = axis[0]
-    #yaxis = axis[1]
-    #x = df[xaxis]
-    #y = df[yaxis]
-
     columnlist = df.columns.tolist()[1:]
     columns = df.values.tolist()
     xaxis = df.take([0], axis=1)
@@ -56,10 +48,10 @@ def make_html(self, context):
         make_line(self, context, title, df, ylabel, columnlist)
         
     if chart_type == 'bar':
-        make_bar(self, context, title, orientation,  df, ylabel, columnlist)
+        make_bar(self, context, title,  df, ylabel, columnlist)
     
     if chart_type == 'map':
-        make_map(self, context, title, x, y)
+        make_map(self, context, title, df, ylabel, columnlist)
     
         
 def plot(self, fig):
@@ -135,7 +127,7 @@ def make_line(self, context, title, df, ylabel, columnlist):
     plot(self, fig)
 
 
-def make_bar(self, context, title, orientation, df, ylabel, columnlist):
+def make_bar(self, context, title, df, ylabel, columnlist):
     xaxis = df.take([0], axis=1)
     
     trace = []
@@ -161,7 +153,7 @@ def make_bar(self, context, title, orientation, df, ylabel, columnlist):
     plot(self, fig)
 
         
-def make_map(self, context, title, x, y):
+def xmake_map(self, context, title, x, y):
     trace = go.Choropleth(
               locations = x, 
               text = y,
@@ -175,6 +167,42 @@ def make_map(self, context, title, x, y):
     
     fig = go.Figure(data=[trace], layout=layout)
     plot(self, fig)
+    
+
+def make_map(self, context, title, df, ylabel, columnlist):  
+    import pdb; pdb.set_trace()
+    locations = df[0][1:]
+    z = df[1][1:].values
+    text = df[2][0] +': ' + df[2][1:]
+    for count in columnlist[1:]:
+        y = df[count].tolist()
+    trace = go.Choropleth(
+            type = 'choropleth',
+            locations = locations,
+            z = z,
+            text = text,
+            marker = dict(
+                line = dict (
+                    color = 'rgb(180,180,180)',
+                    width = 0.5
+                ) ),
+            colorbar = dict(
+                title = title),
+          )
+
+    layout = go.Layout(
+        title = title,
+        geo = dict(
+            showframe = False,
+            showcoastlines = False,
+            projection = dict(
+                type = 'Mercator'
+            )
+        )
+    )
+    
+    fig = go.Figure( data=[trace], layout=layout )
+    plot(self, fig)
  
 def make_json_graph(self, context, title):
     """ generating the html from plotly"""
@@ -185,85 +213,4 @@ def make_json_graph(self, context, title):
     self.plotly_html = plotly.offline.plot(self, fig)
     
     
-def make_xhtml(self, context):
-    """let plottly make bar"""
-    
-    title = self.Title()
-    name = self.Description() or ''
-    self.login()
 
-    graph_data = self.graph_data
-    chart_type = self.chart_type
- 
-    y = []
-    y1 = []
-    y2 = []
-    for item in graph_data:
-        y.append(item['values'][0])
-        y1.append(item['values'][1])
-        y1.append(item['values'][2])
-    
-    x = []
-    for item in graph_data:
-        x.append(item['name'])
-    
-    if chart_type == 'bar':
-        data = [go.Bar(
-            y=y,
-            x=x,
-            orientation = 'v'
-        )]
-        
-
-    if chart_type == 'pie':
-        data = [go.Pie(
-            labels=x,
-            values=y)
-        ]
-        
-    if chart_type == 'histogram':
-        data = [go.Histogram(
-            x=x,
-            y=y)
-        ]
-        
-    if chart_type == 'line':
-        data = go.Line(
-              #x-aksis og y-aksis
-              )
-        layout = go.Layout(
-              title=title,
-              plot_bgcolor='rgb(230, 230,230)',
-              showlegend=True
-              )
-
-    self.plotly_html = plotly.offline.plot(data, include_plotlyjs = False, show_link=False, output_type='div')
-    
-
-def make_basic_graph(self, context):
-    """ generating the html from plotly every time URL is changed"""
-    
-    csv_url = self.csv_url
-    title = self.Title()
-    name = self.Description() or ''
-    
-    self.login()
-    
-    df = pd.read_csv(csv_url)
-    df.head()
-    axis = df.columns.tolist()
-    xaxis = axis[0]
-    yaxis = axis[1]
-    
-    trace = go.Scatter(
-              #x-aksis og y-aksis
-              x = df[xaxis], y = df[yaxis],
-              name=name,
-              )
-    layout = go.Layout(
-              title=title,
-              plot_bgcolor='rgb(230, 230,230)',
-              showlegend=True
-              )
-    fig = go.Figure(data=[trace], layout=layout)
-    self.plotly_html = plotly.offline.plot(fig, show_link=False, include_plotlyjs = False, output_type='div')

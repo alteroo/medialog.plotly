@@ -30,7 +30,6 @@ class IPieBehavior(form.Schema):
         fields=[
                'chart_title',
               'chart_type',
-              'orientation',
               'chart_description',
               'table',
         ],
@@ -58,10 +57,6 @@ class IPieBehavior(form.Schema):
         values=[u"pie", u"bar", u"line", u"map"],
     )
 
-    orientation = schema.Choice(
-        title=u'Vertical or Horizontal (if available)',
-        values=[u"h", u"v"],
-    )
 
 alsoProvides(IPieBehavior, IFormFieldProvider)
 
