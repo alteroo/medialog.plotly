@@ -66,20 +66,26 @@ def plot(self, fig):
     self.plotly_html = plotly.offline.plot(fig, show_link=False, include_plotlyjs = False, output_type='div')
         
 def make_pie(self, context, title, df, ylabel, columns, columnlist):
-    #labels should be 'dog', 'frog' etc
-    #columns = df.values.tolist()
-    labels = columns[0][1:]
+    labelline = df.take([0], axis=0)
+    labels = labelline.values.tolist()[0][1:]
+    graphwidth = 1/ (len(columns) - 1 )
     import pdb; pdb.set_trace()
     
     trace = []
     
-    for count in columnlist:
+    for count in df.index[1:]:
         #should be 1, 2, 3 etc.
-        valueline = columns[count][1:]
+        valueline = df.take([count], axis=0)
+        values = valueline.values.tolist()
+
+        graphsecond = graphwidth * count
+        graphfirst = graphsecond -  graphwidth
         trace.append(go.Pie(
               labels = labels, 
-              values = valueline,
-              name= 'myname',
+              values = values[0][1:],
+              name= values[0][0],
+              domain = dict(x = [graphfirst, graphsecond]
+              ),
              ))
 
     layout = go.Layout(
@@ -88,7 +94,7 @@ def make_pie(self, context, title, df, ylabel, columns, columnlist):
     )
     
     
-    fig = go.Figure(data=[trace], layout=layout)
+    fig = go.Figure(data=trace, layout=layout)
     plot(self, fig)
 
 def make_line(self, context, title, df, ylabel, columnlist):
@@ -96,8 +102,8 @@ def make_line(self, context, title, df, ylabel, columnlist):
     
     trace = []
     
-    for c in columnlist:
-        y = df[c].tolist()
+    for count in columnlist:
+        y = df[count].tolist()
         x = xaxis.values.tolist()
         
         trace.append(go.Scatter(
