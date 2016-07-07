@@ -67,9 +67,14 @@ def plot(self, fig):
         
 def make_pie(self, context, title, df, ylabel, columns, columnlist):
     labelline = df.take([0], axis=0)
+    #labels are same for all pies
     labels = labelline.values.tolist()[0][1:]
-    graphwidth = 1/ (len(columns) - 1 )
-    import pdb; pdb.set_trace()
+    
+    #count number of pies to draw
+    graphs = float(len(columns) - 1)
+    
+    #space needed for each pie
+    graphwidth = 1/graphs 
     
     trace = []
     
@@ -83,7 +88,7 @@ def make_pie(self, context, title, df, ylabel, columns, columnlist):
         trace.append(go.Pie(
               labels = labels, 
               values = values[0][1:],
-              name= values[0][0],
+              text= values[0][0],
               domain = dict(x = [graphfirst, graphsecond]
               ),
              ))
