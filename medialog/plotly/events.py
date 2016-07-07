@@ -56,7 +56,7 @@ def make_html(self, context):
         make_line(self, context, title, df, ylabel, columnlist)
         
     if chart_type == 'bar':
-        make_bar(self, context, title, x, y, orientation)
+        make_bar(self, context, title, orientation,  df, ylabel, columnlist)
     
     if chart_type == 'map':
         make_map(self, context, title, x, y)
@@ -135,21 +135,29 @@ def make_line(self, context, title, df, ylabel, columnlist):
     plot(self, fig)
 
 
-def make_bar(self, context, title, x, y, orientation):
-    trace = go.Bar(
+def make_bar(self, context, title, orientation, df, ylabel, columnlist):
+    xaxis = df.take([0], axis=1)
+    
+    trace = []
+    
+    for count in columnlist:
+        y = df[count].tolist()
+        x = xaxis.values.tolist()
+        
+        trace.append(go.Bar(
               #x-aksis og y-aksis
               x = x, 
               y = y,
-              orientation = orientation,
-              name='name',
-             )
+              name=y[0],
+             ))
+
 
     layout = go.Layout(
               title=title,
               showlegend=True,
               )
     
-    fig = go.Figure(data=[trace], layout=layout)
+    fig = go.Figure(data=trace, layout=layout)
     plot(self, fig)
 
         
