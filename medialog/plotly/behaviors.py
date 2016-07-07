@@ -29,12 +29,13 @@ class IPieBehavior(form.Schema):
         label=_(u'Graph'),
         fields=[
                'chart_title',
-               'chart_description',
               'chart_type',
               'orientation',
+              'chart_description',
               'table',
         ],
      )
+     
      
     form.widget(table=TableFieldWidget)
     table = schema.Text(
@@ -48,9 +49,10 @@ class IPieBehavior(form.Schema):
     )
 
     chart_description = schema.TextLine(
-        title=u'Chart Description',
+        title=u'Chart Description (y-axis)',
     )
     
+  
     chart_type = schema.Choice(
         title=u'Chart type',
         values=[u"pie", u"bar", u"line", u"map"],
