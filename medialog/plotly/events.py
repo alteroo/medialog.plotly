@@ -190,13 +190,16 @@ def make_map(self, context, title, df, ylabel, columnlist):
 
     layout = go.Layout(
         title = title,
+        autosize=False,
+        width=1200,
+        height=600,
         geo = dict(
             showland = True,
-            landcolor = '#eae7e9',
+            landcolor = '#f4f5ed',
             subunitwidth = 1,
             countrywidth = 1,
             showframe = False,
-            showcoastlines = False,
+            showcoastlines = True,
             projection = dict(
                 type = 'Mercator'
             )
