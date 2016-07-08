@@ -33,7 +33,6 @@ def make_html(self, context):
     self.login()
     
     df = pd.read_json(self.table)
-    import pdb; pdb.set_trace()
     
     columnlist = df.columns.tolist()[1:]
     columns = df.values.tolist()
@@ -194,7 +193,7 @@ def make_map(self, context, title, df, ylabel, columnlist):
         title = title,
         autosize=True,
         width=1200,
-        height=600,
+        height=900,
         geo = dict(
             showland = True,
             landcolor = '#f4f5ed',
@@ -203,7 +202,7 @@ def make_map(self, context, title, df, ylabel, columnlist):
             showframe = False,
             showcoastlines = True,
             projection = dict(
-                type = 'Mercator'
+                type = 'Equirectangular'
             )
         )
     )
