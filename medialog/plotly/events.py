@@ -33,6 +33,7 @@ def make_html(self, context):
     self.login()
     
     df = pd.read_json(self.table)
+    import pdb; pdb.set_trace()
     
     columnlist = df.columns.tolist()[1:]
     columns = df.values.tolist()
@@ -190,7 +191,7 @@ def make_map(self, context, title, df, ylabel, columnlist):
 
     layout = go.Layout(
         title = title,
-        autosize=False,
+        autosize=True,
         width=1200,
         height=600,
         geo = dict(
