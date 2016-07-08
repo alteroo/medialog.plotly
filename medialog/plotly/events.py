@@ -161,6 +161,7 @@ def make_map(self, context, title, df, ylabel, columnlist):
     Sorted on first column, country codes NOR / USA or names"""
     #Not pretty, but works
     #country should be in first row
+    #should look up the index name instead
     locations = df[0][1:]
     #main values should be in second
     z = df[1][1:].values
