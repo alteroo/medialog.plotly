@@ -153,29 +153,29 @@ def make_bar(self, context, title, df, ylabel, columnlist):
     plot(self, fig)
 
         
-def xmake_map(self, context, title, x, y):
-    trace = go.Choropleth(
-              locations = x, 
-              text = y,
-              name='name',
-             )
-
-    layout = go.Layout(
-              title=title,
-              showlegend=True,
-              )
-    
-    fig = go.Figure(data=[trace], layout=layout)
-    plot(self, fig)
     
 
 def make_map(self, context, title, df, ylabel, columnlist):  
-    import pdb; pdb.set_trace()
+    """ Take data from the graph and make a world map
+    Sorted on first column, country codes NOR / USA or names"""
+    #Not pretty, but works
+    #country should be in first row
     locations = df[0][1:]
+    #main values should be in second
     z = df[1][1:].values
-    text = df[2][0] +': ' + df[2][1:]
-    for count in columnlist[1:]:
-        y = df[count].tolist()
+        
+    worlddata = df[1:].values.tolist()
+    headings =  df.take([0], axis=0)
+    text = []
+    
+    for country in worlddata:
+        textline = ''
+        for idx,item in enumerate(country[1:]):
+             textlabel = headings[idx+1]
+             valeur = item
+             textline = textline + textlabel + ': ' +  valeur + '<br>'
+        text.append(textline)
+
     trace = go.Choropleth(
             type = 'choropleth',
             locations = locations,
@@ -186,13 +186,15 @@ def make_map(self, context, title, df, ylabel, columnlist):
                     color = 'rgb(180,180,180)',
                     width = 0.5
                 ) ),
-            colorbar = dict(
-                title = title),
           )
 
     layout = go.Layout(
         title = title,
         geo = dict(
+            showland = True,
+            landcolor = '#eae7e9',
+            subunitwidth = 1,
+            countrywidth = 1,
             showframe = False,
             showcoastlines = False,
             projection = dict(
