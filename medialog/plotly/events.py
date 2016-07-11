@@ -32,10 +32,10 @@ def make_html(self, context):
     ylabel = self.chart_description
     self.login()
     
-    import pdb; pdb.set_trace()
     if self.csv_url:
         df = pd.read_csv(self.csv_url)
-        self.table = [self.csv_url.tolist()]
+        self.table = df.values.tolist()
+        self.csv_url = ''
     else:
         df = pd.read_json(self.table)
     
@@ -218,8 +218,6 @@ def make_csv_graph(self, context, title):
     """ generating table data from CSV file"""
     mytable = pd.read_csv(self.csv_url)
     self.table = mytable.values.tolist()
-    import pdb; pdb.set_trace()
-    self.chart_type = 'pie'
     self.csv_url = ''
     
 def make_json_graph(self, context, title):

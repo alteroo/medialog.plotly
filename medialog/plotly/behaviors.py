@@ -12,7 +12,6 @@ _ = MessageFactory('medialog.plotly')
 class IPlotlyBehavior(form.Schema):
     """ Can be 'plotlified' """
 
-    form.mode(plotly_html='hidden')
     plotly_html = schema.Text(
         title=u'Plotly html',
         default=u'',
