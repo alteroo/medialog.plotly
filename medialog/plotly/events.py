@@ -35,7 +35,7 @@ def make_html(self, context):
     import pdb; pdb.set_trace()
     if self.csv_url:
         df = pd.read_csv(self.csv_url)
-        self.table = df.columns.tolist()
+        self.table = [self.csv_url.tolist()]
     else:
         df = pd.read_json(self.table)
     
