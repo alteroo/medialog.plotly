@@ -62,32 +62,25 @@ alsoProvides(IPieBehavior, IFormFieldProvider)
 
 
 
-class IPlotlyJsonBehavior(form.Schema):
-    """ Add graphs from JSON URLs"""
+class IPlotlyCSVBehavior(form.Schema):
+    """ Add graphs from CSV URLs"""
     
     form.fieldset(
         'plotly',
         label=_(u'Plotly'),
         fields=[
-              'json_url',
-              'chart_type',
+              'csv_url',
         ],
      )
          
-    json_url = schema.URI(
-        title = _("label_json_url", default=u"URL to JSON data"),
-        description = _("help_json url",
+    csv_url = schema.URI(
+        title = _("label_csv_url", default=u"URL to CSV data"),
+        description = _("help_csv url",
                       default=""),
-        required = True,
+        required = False,
      )
     
-    form.mode(chart_type='hidden')
-    chart_type = schema.TextLine(
-        title=u'Chart type',
-        default=u"json",
-    )
-    
-alsoProvides(IPlotlyJsonBehavior, IFormFieldProvider)
+alsoProvides(IPlotlyCSVBehavior, IFormFieldProvider)
 
 
 class IXPlotlyBehavior(form.Schema):

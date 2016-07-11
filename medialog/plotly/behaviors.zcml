@@ -13,9 +13,9 @@
         />
 
    <plone:behavior
-        title="Plotly JSON behavior"
-        description="Plotly JSON behavior (make graphs from json url)"
-        provides=".behaviors.IPlotlyJsonBehavior"
+        title="Plotly CSV behavior"
+        description="Plotly CSV behavior (make graphs from CSV url)"
+        provides=".behaviors.IPlotlyCSVBehavior"
         for="plone.dexterity.interfaces.IDexterityContent"
         />   
    

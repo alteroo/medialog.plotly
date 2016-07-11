@@ -32,14 +32,16 @@ def make_html(self, context):
     ylabel = self.chart_description
     self.login()
     
-    df = pd.read_json(self.table)
+    import pdb; pdb.set_trace()
+    if self.csv_url:
+        df = pd.read_csv(self.csv_url)
+    else:
+        df = pd.read_json(self.table)
     
     columnlist = df.columns.tolist()[1:]
     columns = df.values.tolist()
     xaxis = df.take([0], axis=1)
 
-    if chart_type == 'json':
-        make_json_graph(self, context, title)
     
     if chart_type == 'pie':
         make_pie(self,  context, title, df, ylabel, columns, columnlist)
@@ -52,6 +54,8 @@ def make_html(self, context):
     
     if chart_type == 'map':
         make_map(self, context, title, df, ylabel, columnlist)
+        
+   
     
         
 def plot(self, fig):
@@ -61,7 +65,6 @@ def make_pie(self, context, title, df, ylabel, columns, columnlist):
     labelline = df.take([0], axis=0)
     #labels are same for all pies
     labels = labelline.values.tolist()[0][1:]
-    
     #count number of pies to draw
     graphs = float(len(columns) - 1)
     
@@ -210,6 +213,14 @@ def make_map(self, context, title, df, ylabel, columnlist):
     fig = go.Figure( data=[trace], layout=layout )
     plot(self, fig)
  
+def make_csv_graph(self, context, title):
+    """ generating table data from CSV file"""
+    mytable = pd.read_csv(self.csv_url)
+    self.table = mytable.values.tolist()
+    import pdb; pdb.set_trace()
+    self.chart_type = 'pie'
+    self.csv_url = ''
+    
 def make_json_graph(self, context, title):
     """ generating the html from plotly"""
     false = False
@@ -217,6 +228,4 @@ def make_json_graph(self, context, title):
     json_url = self.json_url
     
     self.plotly_html = plotly.offline.plot(self, fig)
-    
-    
 
