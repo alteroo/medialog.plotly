@@ -196,8 +196,6 @@ def make_map(self, context, title, df, ylabel, columnlist):
     layout = go.Layout(
         title = title,
         autosize=True,
-        width=1200,
-        height=900,
         geo = dict(
             showland = True,
             landcolor = '#f4f5ed',
