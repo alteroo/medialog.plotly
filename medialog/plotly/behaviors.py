@@ -39,7 +39,7 @@ class IPieBehavior(form.Schema):
     form.widget(table=TableFieldWidget)
     table = schema.Text(
         title=u'Table',
-        default=u'[["A", "B"], [1, 10]]',
+        default=u'[["Year", "A, "B"], [1990, 10, 20]]',
         required=True,
     )  
     
@@ -54,7 +54,7 @@ class IPieBehavior(form.Schema):
   
     chart_type = schema.Choice(
         title=u'Chart type',
-        values=[u"pie", u"bar", u"line", u"map"],
+        values=[u"table", u"pie", u"bar", u"line", u"map"],
     )
 
 

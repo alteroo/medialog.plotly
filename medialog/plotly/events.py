@@ -8,6 +8,7 @@ import urllib
 #plotly stuff
 import plotly 
 from plotly.graph_objs import Bar, Scatter, Figure, Layout
+from plotly.tools import FigureFactory as FF
 import pandas as pd
 import numpy as np
 import plotly.plotly as py
@@ -38,6 +39,10 @@ def make_html(self, context):
         self.csv_url = ''
     else:
         df = pd.read_json(self.table)
+        
+            
+    if chart_type == 'table':
+        make_table(self, context, title, df)
     
     columnlist = df.columns.tolist()[1:]
     columns = df.values.tolist()
@@ -55,8 +60,7 @@ def make_html(self, context):
     
     if chart_type == 'map':
         make_map(self, context, title, df, ylabel, columnlist)
-        
-   
+
     
         
 def plot(self, fig):
@@ -210,6 +214,11 @@ def make_map(self, context, title, df, ylabel, columnlist):
     )
     
     fig = go.Figure( data=[trace], layout=layout )
+    plot(self, fig)
+
+def make_table(self, context, title, df):
+    """ generating table"""
+    fig = FF.create_table(df)
     plot(self, fig)
  
 def make_csv_graph(self, context, title):
