@@ -4,3 +4,5 @@
 *.pyc
 
 medialog/plotly/browser/views.pyc
+medialog.plotly.egg-info
+medialog.plotly.egg-info/*
