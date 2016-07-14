@@ -24,7 +24,7 @@ def login(self):
     
 
 
-def make_html(self, request, context):
+def make_html(self, context):
     """let plottly make the graph"""
     
     title = self.chart_title
