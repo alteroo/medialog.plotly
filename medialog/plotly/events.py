@@ -60,7 +60,7 @@ def make_html(self, context):
     if chart_type == 'map':
         make_map(self, context, title, df, ylabel, columnlist)
 
-    IStatusMessage(self.request).addStatusMessage(u"Reload the page to see the graph") 
+    #IStatusMessage(self.request).addStatusMessage(u"Reload the page to see the graph") 
     
         
 def plot(self, fig):
