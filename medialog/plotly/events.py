@@ -62,8 +62,9 @@ def make_html(self, context):
     
         
 def plot(self, fig):
+    request = self.request
     self.plotly_html = plotly.offline.plot(fig, show_link=False, include_plotlyjs = False, output_type='div')
-    IStatusMessage(self.request).addStatusMessage(u"Reload the page to see the graph")
+    IStatusMessage(request).addStatusMessage(u"Reload the page to see the graph")
         
 def make_pie(self, context, title, df, ylabel, columns, columnlist):
     labelline = df.take([0], axis=0)
