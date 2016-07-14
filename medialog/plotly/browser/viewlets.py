@@ -19,7 +19,7 @@ class PlotView(ViewletBase):
     """ plot something """
 
     @property
-    def plotly_html(self):
+    def plotly_html(self, request):
         """return the html generated from plotly"""
 
         context = self.context
@@ -29,4 +29,4 @@ class PlotView(ViewletBase):
         
         return context.plotly_html
         
-    IStatusMessage(request).addStatusMessage(u"Reload the page to see the graph")
+    	IStatusMessage(self.request).addStatusMessage(u"Reload the page to see the graph")
