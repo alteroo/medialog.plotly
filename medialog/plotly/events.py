@@ -1,6 +1,6 @@
 from plone import api
 from zope.i18nmessageid import MessageFactory
-from Products.statusmessages.interfaces import IStatusMessage
+
 import urllib
 
 #plotly stuff
@@ -62,9 +62,7 @@ def make_html(self, context):
     
         
 def plot(self, fig):
-    request = self.request
     self.plotly_html = plotly.offline.plot(fig, show_link=False, include_plotlyjs = False, output_type='div')
-    IStatusMessage(request).addStatusMessage(u"Reload the page to see the graph")
         
 def make_pie(self, context, title, df, ylabel, columns, columnlist):
     labelline = df.take([0], axis=0)

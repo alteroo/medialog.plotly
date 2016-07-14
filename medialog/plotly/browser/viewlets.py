@@ -12,43 +12,12 @@ import numpy as np
 import plotly.plotly as py
 import plotly.graph_objs as go
 
-
+from Products.statusmessages.interfaces import IStatusMessage
+    
 
 class PlotView(ViewletBase):
     """ plot something """
 
-    def make_plot(self):
-        """https://plot.ly/python/getting-started/"""
-
-        context  = self.context
-        csv_url = context.csv_url
-        
-        #login / api stuff
-        username = context.portal_registry['medialog.plotly.interfaces.IPlotlySettings.plotly_username']
-        api_key  = context.portal_registry['medialog.plotly.interfaces.IPlotlySettings.plotly_api_key']
-        plotly.tools.set_credentials_file(username=username, api_key=api_key)
-        
-        title = context.Title()
-        name = context.Description() or ''
-        
-        
-        df = pd.read_csv(csv_url)
-        df.head()
-        
-        trace = go.Scatter(
-                  #x-aksis og y-aksis
-                  x = df['AAPL_x'], y = df['AAPL_y'],
-                  name=name,
-                  )
-        layout = go.Layout(
-                  title=title,
-                  plot_bgcolor='rgb(230, 230,230)',
-                  showlegend=True
-                  )
-        fig = go.Figure(data=[trace], layout=layout)
-        context.plotly_html = plotly.offline.plot(fig, show_link=False, include_plotlyjs = False, output_type='div')
-      
-    
     @property
     def plotly_html(self):
         """return the html generated from plotly"""
@@ -59,3 +28,5 @@ class PlotView(ViewletBase):
         	self.make_plot()
         
         return context.plotly_html
+        
+    IStatusMessage(request).addStatusMessage(u"Reload the page to see the graph")
