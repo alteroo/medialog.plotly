@@ -12,6 +12,7 @@ import numpy as np
 import plotly.plotly as py
 import plotly.graph_objs as go
 
+from Products.statusmessages.interfaces import IStatusMessage
 
 _ = MessageFactory('medialog.plotly')
  
@@ -23,7 +24,7 @@ def login(self):
     
 
 
-def make_html(self, context):
+def make_html(self, request, context):
     """let plottly make the graph"""
     
     title = self.chart_title
@@ -59,6 +60,7 @@ def make_html(self, context):
     if chart_type == 'map':
         make_map(self, context, title, df, ylabel, columnlist)
 
+    IStatusMessage(self.request).addStatusMessage(u"Reload the page to see the graph") 
     
         
 def plot(self, fig):

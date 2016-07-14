@@ -11,15 +11,13 @@ import pandas as pd
 import numpy as np
 import plotly.plotly as py
 import plotly.graph_objs as go
-
-from Products.statusmessages.interfaces import IStatusMessage
     
 
 class PlotView(ViewletBase):
     """ plot something """
 
     @property
-    def plotly_html(self, request):
+    def plotly_html(self):
         """return the html generated from plotly"""
 
         context = self.context
@@ -29,4 +27,4 @@ class PlotView(ViewletBase):
         
         return context.plotly_html
         
-    	IStatusMessage(self.request).addStatusMessage(u"Reload the page to see the graph")
+    	
