@@ -15,7 +15,7 @@ class IPlotlyBehavior(form.Schema):
     form.mode(plotly_html='hidden')
     plotly_html = schema.Text(
         title=u'Plotly html',
-        default=u'',
+        default=u'You must reload the page to see the graph',
         required=False,
     )
 alsoProvides(IPlotlyBehavior, IFormFieldProvider)
