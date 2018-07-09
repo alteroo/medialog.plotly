@@ -1,8 +1,9 @@
 <configure
     xmlns="http://namespaces.zope.org/zope"
     xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:plone="http://namespaces.plone.org/plone"
     i18n_domain="medialog.plotly">
-          
+
   <include package="plone.app.contentmenu" />
 
     <browser:viewlet
@@ -23,8 +24,13 @@
         template="plotlyviewlet.pt"
         permission="zope2.View"
     />
-    
 
 
+    <!-- Publish static files -->
+    <plone:static
+        name="plotly"
+        type="plone"
+        directory="static"
+        />
 
 </configure>
