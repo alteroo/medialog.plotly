@@ -4,7 +4,7 @@ from zope.i18nmessageid import MessageFactory
 import urllib
 
 #plotly stuff
-import plotly 
+import plotly
 from plotly.graph_objs import Bar, Scatter, Figure, Layout
 from plotly.tools import FigureFactory as FF
 import pandas as pd
@@ -15,69 +15,71 @@ import plotly.graph_objs as go
 from Products.statusmessages.interfaces import IStatusMessage
 
 _ = MessageFactory('medialog.plotly')
- 
+
 
 def login(self):
     username = self.portal_registry['medialog.plotly.interfaces.IPlotlySettings.plotly_username']
     api_key  = self.portal_registry['medialog.plotly.interfaces.IPlotlySettings.plotly_api_key']
     plotly.tools.set_credentials_file(username=username, api_key=api_key)
-    
+
 
 
 def make_html(self, context):
     """let plottly make the graph"""
-    
+
     title = self.chart_title
     chart_type = self.chart_type
     ylabel = self.chart_description
     self.login()
-    
+
     if self.csv_url:
         df = pd.read_csv(self.csv_url)
         self.table = df.values.tolist()
         self.csv_url = ''
     else:
         df = pd.read_json(self.table)
-        
-            
+
+    if self.flip_axis:
+        df = df.T
+
     if chart_type == 'table':
         make_table(self, context, title, df)
-    
+
     columnlist = df.columns.tolist()[1:]
     columns = df.values.tolist()
     xaxis = df.take([0], axis=1)
 
-    
+
     if chart_type == 'pie':
         make_pie(self,  context, title, df, ylabel, columns, columnlist)
-    
+
     if chart_type == 'line':
         make_line(self, context, title, df, ylabel, columnlist)
-        
+
     if chart_type == 'bar':
         make_bar(self, context, title,  df, ylabel, columnlist)
-    
+
     if chart_type == 'map':
         make_map(self, context, title, df, ylabel, columnlist)
 
-    #IStatusMessage(self.request).addStatusMessage(u"Reload the page to see the graph") 
-    
-        
+    #IStatusMessage(self.request).addStatusMessage(u"Reload the page to see the graph")
+
+
 def plot(self, fig):
     self.plotly_html = plotly.offline.plot(fig, show_link=False, include_plotlyjs = False, output_type='div')
-        
+
 def make_pie(self, context, title, df, ylabel, columns, columnlist):
     labelline = df.take([0], axis=0)
     #labels are same for all pies
     labels = labelline.values.tolist()[0][1:]
     #count number of pies to draw
     graphs = float(len(columns) - 1)
-    
+
     #space needed for each pie
-    graphwidth = 1/graphs 
-    
+    graphwidth = 1/graphs
+
     trace = []
-    
+
     for count in df.index[1:]:
         #should be 1, 2, 3 etc.
         valueline = df.take([count], axis=0)
@@ -86,7 +88,7 @@ def make_pie(self, context, title, df, ylabel, columns, columnlist):
         graphsecond = graphwidth * count
         graphfirst = graphsecond -  graphwidth
         trace.append(go.Pie(
-              labels = labels, 
+              labels = labels,
               values = values[0][1:],
               name= values[0][0],
               text= values[0][0],
@@ -99,23 +101,23 @@ def make_pie(self, context, title, df, ylabel, columns, columnlist):
               title=title,
               showlegend=True,
     )
-    
-    
+
+
     fig = go.Figure(data=trace, layout=layout)
     plot(self, fig)
 
 def make_line(self, context, title, df, ylabel, columnlist):
     xaxis = df.take([0], axis=1)
-    
+
     trace = []
-    
+
     for count in columnlist:
         y = df[count].tolist()
         x = xaxis.values.tolist()
-        
+
         trace.append(go.Scatter(
               #x-aksis og y-aksis
-              x = x, 
+              x = x,
               y = y,
               name=y[0],
              ))
@@ -130,23 +132,23 @@ def make_line(self, context, title, df, ylabel, columnlist):
                 title=ylabel,
              )
     )
-    
+
     fig = go.Figure(data=trace, layout=layout)
     plot(self, fig)
 
 
 def make_bar(self, context, title, df, ylabel, columnlist):
     xaxis = df.take([0], axis=1)
-    
+
     trace = []
-    
+
     for count in columnlist:
         y = df[count].tolist()
         x = xaxis.values.tolist()
-        
+
         trace.append(go.Bar(
               #x-aksis og y-aksis
-              x = x, 
+              x = x,
               y = y,
               name=y[0],
              ))
@@ -156,14 +158,14 @@ def make_bar(self, context, title, df, ylabel, columnlist):
               title=title,
               showlegend=True,
               )
-    
+
     fig = go.Figure(data=trace, layout=layout)
     plot(self, fig)
 
-        
-    
 
-def make_map(self, context, title, df, ylabel, columnlist):  
+
+
+def make_map(self, context, title, df, ylabel, columnlist):
     """ Take data from the graph and make a world map
     Sorted on first column, country codes NOR / USA or names"""
     #Not pretty, but works
@@ -172,11 +174,11 @@ def make_map(self, context, title, df, ylabel, columnlist):
     locations = df[0][1:]
     #main values should be in second
     z = df[1][1:].values
-        
+
     worlddata = df[1:].values.tolist()
     headings =  df.take([0], axis=0)
     text = []
-    
+
     for country in worlddata:
         textline = ''
         for idx,item in enumerate(country[1:]):
@@ -212,7 +214,7 @@ def make_map(self, context, title, df, ylabel, columnlist):
             )
         )
     )
-    
+
     fig = go.Figure( data=[trace], layout=layout )
     plot(self, fig)
 
@@ -220,18 +222,17 @@ def make_table(self, context, title, df):
     """ generating table"""
     fig = FF.create_table(df)
     plot(self, fig)
- 
+
 def make_csv_graph(self, context, title):
     """ generating table data from CSV file"""
     mytable = pd.read_csv(self.csv_url)
     self.table = mytable.values.tolist()
     self.csv_url = ''
-    
+
 def make_json_graph(self, context, title):
     """ generating the html from plotly"""
     false = False
     true = True
     json_url = self.json_url
-    
-    self.plotly_html = plotly.offline.plot(self, fig)
 
+    self.plotly_html = plotly.offline.plot(self, fig)

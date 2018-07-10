@@ -31,6 +31,7 @@ class IPieBehavior(form.Schema):
                'chart_title',
               'chart_type',
               'chart_description',
+              'flip_axis',
 #              'table',
         ],
      )
@@ -57,6 +58,9 @@ class IPieBehavior(form.Schema):
         values=[u"table", u"pie", u"bar", u"line", u"map"],
     )
 
+    flip_axis = schema.Bool(
+        title=u'Flip axis',
+    )
 
 alsoProvides(IPieBehavior, IFormFieldProvider)
 
